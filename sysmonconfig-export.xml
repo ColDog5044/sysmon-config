@@ -4,11 +4,8 @@
 	Source project:	https://github.com/SwiftOnSecurity/sysmon-config
 	Source license:	Creative Commons Attribution 4.0 | You may privatize, fork, edit, teach, publish, or deploy for commercial use - with attribution in the text.
 
-	REQUIRED: Sysmon version 13 or higher (due to changes in syntax and bug-fixes)
+	REQUIRED: Sysmon version 15 or higher (due to changes in syntax and bug-fixes)
 		https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
-
-	NOTE: To collect Sysmon logs centrally for free, see https://aka.ms/WEF | Command to allow log access to the Network Service:
-		wevtutil.exe sl Microsoft-Windows-Sysmon/Operational /ca:O:BAG:SYD:(A;;0xf0005;;;SY)(A;;0x5;;;BA)(A;;0x1;;;S-1-5-32-573)(A;;0x1;;;NS)
 
 	NOTE: Do not let the size and complexity of this configuration discourage you from customizing it or building your own.
 		This configuration is based around known, high-signal event tracing, and thus appears complicated, but it is only very
@@ -1429,6 +1426,8 @@
 		<!--COMMENT:	This event is generated when an executable gets written to disk
 			[ https://medium.com/@olafhartong/sysmon-15-0-file-executable-detected-40fd64349f36 ]
 		-->
+
+    <!--CUSTOM RULES-->
 
 	<RuleGroup name="Suspicious / Malicious Exe Download" groupRelation="or">
 		<FileExecutableDetected onmatch="include">
