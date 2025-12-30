@@ -76,6 +76,8 @@
 		<ProcessCreate onmatch="exclude">
 			<CommandLine condition="contains">\Machine\Scripts\Startup\ipamprovisioning.ps1</CommandLine> <!-- Windows IP Address Management (IPAM) -->
 			<!--SECTION: Microsoft Windows-->
+            <Image condition="is">C:\Windows\System32\chcp.com</Image>
+			<Image condition="is">C:\Windows\System32\CompPkgSrv.exe</Image>
 			<CommandLine condition="is">"C:\Windows\system32\cscript.exe" /nologo "MonitorKnowledgeDiscovery.vbs"</CommandLine>
 			<CommandLine condition="begin with"> "C:\Windows\system32\wermgr.exe" "-queuereporting_svc" </CommandLine> <!--Windows:Windows error reporting/telemetry-->
 			<CommandLine condition="begin with">C:\Windows\system32\wbem\wmiprvse.exe -Embedding</CommandLine> <!--Windows: WMI provider host-->
@@ -222,7 +224,15 @@
 			<CommandLine condition="begin with">"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --type=</CommandLine> <!--Google:Chrome: massive command-line arguments-->
 			<CommandLine condition="begin with">"C:\Program Files\Google\Chrome\Application\chrome.exe" --type=</CommandLine> <!--Google:Chrome: massive command-line arguments-->
             <Image condition="begin with">C:\Program Files (x86)\Google\GoogleUpdater\</Image> <!--Google: Updater for system-wide installations-->
-			<!--SECTION: Splunk-->
+			<!-- .NET Development -->
+			<Image condition="is">C:\Program Files\dotnet\dotnet.exe</Image>
+            <!-- GitHub Desktop - Development tool (high volume) -->
+			<Image condition="is">C:\Users\claney\AppData\Local\GitHubDesktop\app-3.5.4\resources\app\git\mingw64\bin\git.exe</Image>
+			<Image condition="is">C:\Users\claney\AppData\Local\GitHubDesktop\app-3.5.4\resources\app\git\cmd\git.exe</Image>
+			<Image condition="is">C:\Users\claney\AppData\Local\GitHubDesktop\app-3.5.4\resources\app\git\usr\bin\sh.exe</Image>
+			<Image condition="is">C:\Users\claney\AppData\Local\GitHubDesktop\app-3.5.4\resources\app\git\mingw64\bin\git-remote-https.exe</Image>
+			<Image condition="is">C:\Users\claney\AppData\Local\GitHubDesktop\app-3.5.4\resources\app\git\mingw64\libexec\git-core\git-credential-manager.exe</Image>
+            <!--SECTION: Splunk-->
 			<Image condition="contains">:\Program Files\Splunk\bin\</Image> <!--Splunk: Very noisy if using Universal Forwarders-->
 			<ParentImage condition="end with">:\Program Files\Splunk\bin\splunkd.exe</ParentImage> <!--Splunk: Very noisy if using Universal Forwarders-->
 			<ParentImage condition="end with">:\Program Files\Splunk\bin\splunk.exe</ParentImage> <!--Splunk: Very noisy if using Universal Forwarders-->
@@ -408,6 +418,8 @@
 			<Image condition="begin with">C:\Program Files\OMS Gateway\</Image>
 			<!-- SECTION: PRTG -->
 			<Image condition="is">C:\Program Files (x86)\PRTG Network Monitor\PRTG Probe.exe</Image>
+            <!-- GitHub Desktop -->
+			<Image condition="is">C:\Users\claney\AppData\Local\GitHubDesktop\app-3.5.4\GitHubDesktop.exe</Image>
 		</NetworkConnect>
 	</RuleGroup>
 
@@ -534,6 +546,11 @@
 
 	<RuleGroup name="" groupRelation="or">
 		<ProcessAccess onmatch="exclude">
+			<!-- Sophos Security Software -->
+			<SourceImage condition="is">C:\Program Files\Sophos\Live Query\SophosOsquery.exe</SourceImage>
+			<SourceImage condition="is">C:\Program Files\Sophos\Endpoint Defense\SEDService.exe</SourceImage>
+			<SourceImage condition="is">C:\Program Files\Sophos\Endpoint Defense\SSPService.exe</SourceImage>
+			<SourceImage condition="is">C:\Program Files (x86)\Sophos\Management Communications System\Endpoint\McsClient.exe</SourceImage>
 			<SourceImage condition="is">C:\Program Files\Aurora-Agent\aurora-agent.exe</SourceImage>
 			<SourceImage condition="is">C:\Program Files\Aurora-Agent\aurora-agent-64.exe</SourceImage>
 		</ProcessAccess>
@@ -655,6 +672,13 @@
 			<!--SECTION: Windows:Updates-->
 			<TargetFilename condition="begin with">C:\$WINDOWS.~BT\Sources\</TargetFilename> <!-- Windows: Feature updates containing lots of .exe and .sys-->
 			<Image condition="begin with">C:\Windows\winsxs\amd64_microsoft-windows</Image> <!-- Windows: Windows update-->
+            <!-- .NET Compiler - High volume in development -->
+			<Image condition="is">C:\Program Files\dotnet\dotnet.exe</Image>
+			<Image condition="is">C:\Program Files\dotnet\sdk\10.0.101\Roslyn\bincore\VBCSCompiler.exe</Image>
+			<!-- VS Code Language Server -->
+			<Image condition="contains">\.vscode\extensions\ms-dotnettools.csharp</Image>
+			<!-- NinjaRMM -->
+			<Image condition="is">C:\ProgramData\NinjaRMMAgent\components\app-patching-orbit\NinjaOrbit.exe</Image>
 		</FileCreate>
 	</RuleGroup>
 
@@ -924,6 +948,10 @@
 			<TargetObject condition="is">HKLM\Software\Microsoft\Windows\CurrentVersion\WINEVT\Publishers\{945a8954-c147-4acd-923f-40c45405a658}</TargetObject> <!--Windows update-->
 			<!-- Services Noise -->
 			<TargetObject condition="contains">\CurrentVersion\NetworkList\Profiles\</TargetObject>
+            <!-- Sophos Security Software -->
+			<Image condition="is">C:\Program Files\Sophos\Live Query\SophosOsquery.exe</Image>
+			<!-- GitHub Desktop Git -->
+			<Image condition="is">C:\Users\claney\AppData\Local\GitHubDesktop\app-3.5.4\resources\app\git\cmd\git.exe</Image>
 		</RegistryEvent>
 	</RuleGroup>
 
@@ -1184,6 +1212,15 @@
 			<QueryName condition="is">protection.outlook.com</QueryName> <!--Microsoft: Office-->
 			<QueryName condition="is">substrate.office.com</QueryName> <!--Microsoft: Office-->
 			<QueryName condition="end with">.measure.office.com</QueryName> <!--Microsoft: Office-->
+            <!-- NinjaRMM - Management tool -->
+			<Image condition="is">C:\Program Files (x86)\NinjaOne\NinjaRMMAgent.exe</Image>
+			<!-- Development Tools -->
+			<Image condition="is">C:\Program Files\Microsoft VS Code\Code.exe</Image>
+			<Image condition="is">C:\Program Files\dotnet\dotnet.exe</Image>
+			<Image condition="is">C:\Users\claney\AppData\Local\GitHubDesktop\app-3.5.4\resources\app\git\mingw64\bin\git-remote-https.exe</Image>
+			<!-- Sophos Security Software -->
+			<Image condition="is">C:\Program Files (x86)\Sophos\Management Communications System\Endpoint\McsClient.exe</Image>
+			<Image condition="is">C:\ProgramData\Sophos\AutoUpdate\Cache\sophos_autoupdate1.dir\SophosUpdate.exe</Image>
 			<!--3rd-party applications-->
 			<QueryName condition="end with">.adobe.com</QueryName> <!--Adobe-->
 			<QueryName condition="end with">.adobe.io</QueryName> <!--Adobe-->
